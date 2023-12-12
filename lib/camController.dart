@@ -1,7 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -64,7 +60,6 @@ class CameraController extends GetxController {
     _imageFileList = value == null ? null : <XFile>[value];
   }
 
-//  String _currentAddress;
   _getAddressFromLatLng() async {
     try {
       List<Placemark> p = await placemarkFromCoordinates(
@@ -120,40 +115,5 @@ class CameraController extends GetxController {
             color: Colors.white,
           ));
     }
-
-    // String fname = f.format(DateTime.now());
-    // fname = fname + "png";
-    // final boundary =
-    //     key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
-    // final image = await boundary?.toImage();
-    // final byteData = await image?.toByteData(format: ImageByteFormat.png);
-    // final imageBytes = byteData?.buffer.asUint8List();
-
-    // if (imageBytes != null) {
-    //   final directory = await getApplicationDocumentsDirectory();
-    //   final imagePath =
-    //       await File('${directory.path}/$fname').create();
-    //   await imagePath.writeAsBytes(imageBytes);
-    //   print("Image Saved!");
-    // }else {
-    //    print("Image Null!");
-    // }
-
-    // if (imageBytes != null) {
-    //   await ImageGallerySaver.saveImage(Uint8List.fromList(imageBytes),
-    //       quality: 100, name: "$fname.png");
-    //   Get.snackbar(
-    //     "Image Capture",
-    //     "Saved to gallery",
-    //     colorText: Colors.white,
-    //     backgroundColor: Colors.green,
-    //     icon: const Icon(Icons.check_circle),
-    //   );
-    // } else {
-    //   Get.snackbar("Image Capture", "Cannot save image to gallery.",
-    //       colorText: Colors.white,
-    //       backgroundColor: Colors.red,
-    //       icon: const Icon(Icons.warning_rounded));
-    // }
   }
 }
