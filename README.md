@@ -1,6 +1,22 @@
-# flutter_camera_geolocation
+# Flutter Camera Geolocation 
 
-A new Flutter project.
+This is a flutter project to 
+- capture image
+- get location
+- put location info on top of image
+- save into gallery
+
+Using libraries
+- image_picker
+- image
+- geolocator
+- geocoding
+- permission_handler
+- get
+- intl
+- image_gallery_saver
+- path_provider
+- screenshot
 
 ## Getting Started
 
