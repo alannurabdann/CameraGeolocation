@@ -44,15 +44,21 @@ class CameraController extends GetxController {
           maxWidth: 640,
           maxHeight: 480,
           imageQuality: 100);
-      _setImageFileListFromFile(photo);
-      //File result = File(_imageFileList![0].path);
-      imagePath.value = _imageFileList![0].path.toString();
-      imageCapture.value = true;
-      await saveImage();
+
+      if (photo != null) {
+        print(photo.path);
+        _setImageFileListFromFile(photo);
+        //File result = File(_imageFileList![0].path);
+        imagePath.value = _imageFileList![0].path.toString();
+        imageCapture.value = true;
+        await saveImage();
+      }else {
+        print("User Cancelled");
+      }
+
       update();
-    } catch (platformException) {
-      imageCapture.value = true;
-      print("not allowing " + platformException.toString());
+    } catch (e) {
+      print("not allowing " + e.toString());
     }
   }
 
@@ -82,7 +88,7 @@ class CameraController extends GetxController {
   }
 
   getLocation() async {
-     if (await Permission.location.status.isGranted) {
+    if (await Permission.location.status.isGranted) {
       await geolocator.getCurrentPosition().then((Position position) {
         _currentPosition = position;
         _getAddressFromLatLng();
