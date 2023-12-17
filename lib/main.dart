@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_file.dart';
 
 import 'appPages.dart';
 import 'appRoutes.dart';
 
-void main() {
+void main() async {
+  //await initializeDateFormatting('id_ID', 'en_EN').then((_) => runApp(MyApp()));
   runApp(MyApp());
 }
 

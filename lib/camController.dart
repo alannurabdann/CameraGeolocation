@@ -3,13 +3,12 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 
 class CameraController extends GetxController {
-  List<XFile>? _imageFileList;
   RxBool imageCapture = false.obs;
   RxString imagePath = "".obs;
   final GeolocatorPlatform geolocator = GeolocatorPlatform.instance;
@@ -17,12 +16,12 @@ class CameraController extends GetxController {
   RxString myAddress = "".obs;
   RxString currentDate = "".obs;
   ScreenshotController screenshotC = ScreenshotController();
+  RxInt imageWidth = 0.obs;
 
   @override
   void onInit() async {
     super.onInit();
     askPermission();
-    getdate();
   }
 
   void askPermission() async {
@@ -34,36 +33,40 @@ class CameraController extends GetxController {
     ].request();
   }
 
-  final picker = ImagePicker();
-  Future getImage() async {
-    try {
-      getLocation();
-      imageCapture.value = false;
-      final XFile? photo = await picker.pickImage(
-          source: ImageSource.camera,
-          maxWidth: 640,
-          maxHeight: 480,
-          imageQuality: 100);
-
-      if (photo != null) {
-        print(photo.path);
-        _setImageFileListFromFile(photo);
-        //File result = File(_imageFileList![0].path);
-        imagePath.value = _imageFileList![0].path.toString();
-        imageCapture.value = true;
-        await saveImage();
-      }else {
-        print("User Cancelled");
-      }
-
+  Future getImage(BuildContext context) async {
+    getLocation();
+    getdate();
+    var image = await ImagePickerGC.pickImage(
+        enableCloseButton: true,
+        closeIcon: const Icon(
+          Icons.close,
+          color: Colors.red,
+          size: 12,
+        ),
+        context: context,
+        source: ImgSource.Camera,
+        barrierDismissible: true,
+        cameraIcon: const Icon(
+          Icons.camera_alt,
+          color: Colors.red,
+        ), //cameraIcon and galleryIcon can change. If no icon provided default icon will be present
+        cameraText: const Text(
+          "From Camera",
+          style: TextStyle(color: Colors.red),
+        ),
+        galleryText: const Text(
+          "From Gallery",
+          style: TextStyle(color: Colors.blue),
+        ));
+    if (image != null) {
+      imagePath.value = image.path;
+      imageCapture.value = true;
+      print(imageWidth.value);
+      saveImage();
       update();
-    } catch (e) {
-      print("not allowing " + e.toString());
+    } else {
+      print("User Cancelled");
     }
-  }
-
-  void _setImageFileListFromFile(XFile? value) {
-    _imageFileList = value == null ? null : <XFile>[value];
   }
 
   _getAddressFromLatLng() async {
@@ -71,8 +74,8 @@ class CameraController extends GetxController {
       List<Placemark> p = await placemarkFromCoordinates(
           _currentPosition.latitude, _currentPosition.longitude);
       Placemark place = p[0];
-      myAddress.value =
-          "${_currentPosition.latitude.toString()}, ${_currentPosition.longitude.toString()}"
+      myAddress.value = "Lat ${_currentPosition.latitude.toString()}, "
+          "Long ${_currentPosition.longitude.toString()}"
           "\n${place.name}, ${place.subLocality}, ${place.locality}, ${place.postalCode}"
           "\n${currentDate.value}";
       print(myAddress.value);
@@ -83,7 +86,8 @@ class CameraController extends GetxController {
   }
 
   getdate() {
-    final String formatted = DateFormat.yMd().add_jm().format(DateTime.now());
+    //Intl.defaultLocale = 'id';
+    final String formatted = DateFormat("E, dd MMM yyy HH:mm:ss").format(DateTime.now());
     currentDate.value = formatted;
   }
 
