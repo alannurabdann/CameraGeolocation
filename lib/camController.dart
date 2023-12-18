@@ -61,7 +61,6 @@ class CameraController extends GetxController {
     if (image != null) {
       imagePath.value = image.path;
       imageCapture.value = true;
-      print(imageWidth.value);
       saveImage();
       update();
     } else {
