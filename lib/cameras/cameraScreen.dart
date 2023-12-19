@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_camera_geolocation/camController.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
+
+import 'camController.dart';
 
 class CameraScreen extends StatelessWidget {
   CameraController c = Get.put(CameraController());

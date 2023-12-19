@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_file.dart';
 
-import 'appPages.dart';
-import 'appRoutes.dart';
+import 'helpers/appPages.dart';
+import 'helpers/appRoutes.dart';
 
 void main() async {
   //await initializeDateFormatting('id_ID', 'en_EN').then((_) => runApp(MyApp()));
