@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
       ),
       getPages: AppPages.pages,
-      initialRoute: AppRoutes.main,
+      initialRoute: AppRoutes.dates,
     );
   }
 }

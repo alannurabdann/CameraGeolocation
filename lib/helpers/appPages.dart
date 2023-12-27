@@ -2,6 +2,7 @@ import 'package:flutter_camera_geolocation/profiles/profileScreen.dart';
 import 'package:get/get.dart';
 
 import '../cameras/cameraScreen.dart';
+import '../dates/dateScreen.dart';
 import 'appRoutes.dart';
 
 class AppPages {
@@ -13,6 +14,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.profile,
       page: () => ProfileScreen(),
+    ),
+      GetPage(
+      name: AppRoutes.dates,
+      page: () => DateScreen(),
     ),
   ];
 }
