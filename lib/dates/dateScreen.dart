@@ -7,7 +7,7 @@ class DateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    c.currentDate();
+    c.getDate();
     return Scaffold(
         appBar: AppBar(title: const Text("Date Screen")),
         body: Center(child: Obx(() => Text(c.currentDate.value))));
